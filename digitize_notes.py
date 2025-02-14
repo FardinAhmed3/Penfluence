@@ -95,3 +95,61 @@ def digitize_notes(image_path):
 # Run digitization on an example image
 image_path = 'test_image.png'
 text, diagram_descriptions = digitize_notes(image_path)
+
+def generate_pdf(output_pdf_path, text, diagram_paths):
+    """Creates a PDF with extracted text and diagrams, handling text wrapping."""
+    c = canvas.Canvas(output_pdf_path, pagesize=letter)
+    width, height = letter  # Standard letter-size PDF
+
+    # Set text properties
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(100, height - 50, "Digitized Notes")
+
+    c.setFont("Helvetica", 12)
+    text_width = 500  # Max width for text wrapping
+    y_position = height - 80  # Start below the title
+
+    # Wrap text into multiple lines
+    wrapped_text = []
+    for line in text.split("\n"):
+        wrapped_text.extend(textwrap.wrap(line, width=80))  # Adjust width for wrapping
+
+    for line in wrapped_text:
+        if y_position < 50:  # If near the bottom, create a new page
+            c.showPage()
+            c.setFont("Helvetica", 12)
+            y_position = height - 50
+        c.drawString(50, y_position, line)
+        y_position -= 15  # Move to the next line
+
+    # Add diagrams
+    if diagram_paths:
+        c.showPage()  # Start a new page for diagrams
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(100, height - 50, "Extracted Diagrams")
+        y_position = height - 150  # Adjust starting position
+
+        for diagram_path in diagram_paths:
+            if y_position < 100:  # If near the bottom, create a new page
+                c.showPage()
+                c.setFont("Helvetica-Bold", 14)
+                c.drawString(100, height - 50, "Extracted Diagrams (cont.)")
+                y_position = height - 150
+
+            # Load and resize image to fit in PDF
+            img = Image.open(diagram_path)
+            img.thumbnail((400, 300))  # Resize to fit within the page
+            
+            img_width, img_height = img.size
+            img_x = (width - img_width) / 2  # Center align image
+            
+            # Draw image on PDF
+            c.drawInlineImage(diagram_path, img_x, y_position, width=img_width, height=img_height)
+            y_position -= img_height + 20  # Move down for next image
+
+    c.save()
+    print(f"PDF saved at {output_pdf_path}")
+
+# Example usage
+output_pdf_path = "digitized_notes.pdf"
+generate_pdf(output_pdf_path, text, diagram_descriptions)
