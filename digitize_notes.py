@@ -97,22 +97,22 @@ image_path = 'test_image.png'
 text, diagram_descriptions = digitize_notes(image_path)
 
 def generate_pdf(output_pdf_path, text, diagram_paths):
-    """Creates a PDF with extracted text and diagrams, handling text wrapping."""
+    """Creates a PDF with extracted text and diagrams in a 2-column grid (6 per page)."""
     c = canvas.Canvas(output_pdf_path, pagesize=letter)
     width, height = letter  # Standard letter-size PDF
 
-    # Set text properties
+    # === Step 1: Add the Title and Text ===
     c.setFont("Helvetica-Bold", 14)
     c.drawString(100, height - 50, "Digitized Notes")
 
     c.setFont("Helvetica", 12)
-    text_width = 500  # Max width for text wrapping
+    text_width = width - 50  # Max width for text wrapping
     y_position = height - 80  # Start below the title
 
     # Wrap text into multiple lines
     wrapped_text = []
     for line in text.split("\n"):
-        wrapped_text.extend(textwrap.wrap(line, width=80))  # Adjust width for wrapping
+        wrapped_text.extend(textwrap.wrap(line, width=100))  # Adjust width for wrapping
 
     for line in wrapped_text:
         if y_position < 50:  # If near the bottom, create a new page
@@ -122,30 +122,42 @@ def generate_pdf(output_pdf_path, text, diagram_paths):
         c.drawString(50, y_position, line)
         y_position -= 15  # Move to the next line
 
-    # Add diagrams
+    # === Step 2: Add Diagrams in a Grid Layout ===
     if diagram_paths:
         c.showPage()  # Start a new page for diagrams
         c.setFont("Helvetica-Bold", 14)
         c.drawString(100, height - 50, "Extracted Diagrams")
-        y_position = height - 150  # Adjust starting position
 
-        for diagram_path in diagram_paths:
-            if y_position < 100:  # If near the bottom, create a new page
+        img_width, img_height = 150, 150  # Resized image dimensions
+        x_positions = [140, 310]  # X-coordinates for 2 images per row
+        y_position = height - 250  # Start position
+
+        images_on_page = 0
+
+        for i, diagram_path in enumerate(diagram_paths):
+            if images_on_page == 8:  # If 6 images already placed, start a new page
                 c.showPage()
                 c.setFont("Helvetica-Bold", 14)
                 c.drawString(100, height - 50, "Extracted Diagrams (cont.)")
                 y_position = height - 150
+                images_on_page = 0  # Reset count for new page
 
-            # Load and resize image to fit in PDF
+            # Load and resize image
             img = Image.open(diagram_path)
-            img.thumbnail((400, 300))  # Resize to fit within the page
-            
-            img_width, img_height = img.size
-            img_x = (width - img_width) / 2  # Center align image
-            
-            # Draw image on PDF
+            img.thumbnail((img_width, img_height))  
+
+            # Determine column position
+            col = i % 2
+            img_x = x_positions[col]  
+
+            # Draw image
             c.drawInlineImage(diagram_path, img_x, y_position, width=img_width, height=img_height)
-            y_position -= img_height + 20  # Move down for next image
+
+            # Move to the next row if two images are placed
+            if col == 1:
+                y_position -= img_height + 20  # Move down for next row
+
+            images_on_page += 1  # Increment count of images on this page
 
     c.save()
     print(f"PDF saved at {output_pdf_path}")
