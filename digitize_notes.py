@@ -150,6 +150,5 @@ def generate_pdf(output_pdf_path, text, diagram_paths):
     c.save()
     print(f"PDF saved at {output_pdf_path}")
 
-# Example usage
 output_pdf_path = "digitized_notes.pdf"
 generate_pdf(output_pdf_path, text, diagram_descriptions)
