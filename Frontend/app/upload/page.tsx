@@ -81,7 +81,10 @@ export default function UploadPage() {
               {/* File upload button */}
               {!isCaptured && (
                 <>
-                  <label htmlFor="file-upload" className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer">
+                  <label
+                    htmlFor="file-upload"
+                    className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer block text-center flex items-center justify-center"
+                  >
                     Upload Image
                   </label>
                   <input
@@ -93,7 +96,6 @@ export default function UploadPage() {
                   />
                 </>
               )}
-
               {/* Camera capture button */}
               {!isCameraStarted && !isCaptured && (
                 <button
