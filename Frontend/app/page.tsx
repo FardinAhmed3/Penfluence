@@ -16,7 +16,7 @@ export default function LandingPage() {
               Transform your handwritten notes into digital with ease and precision.
             </p>
             <Image
-              src="/handwritten.png"
+              src="/Handwritten.png"
               alt="Handwritten Notes"
               className="mx-auto mb-4 object-contain" // object-contain ensures the image fits without distorting
               width={400}
@@ -36,7 +36,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                <Image src="/team/Sadia Zalmay.png" alt="Sadia" width={128} height={128} className="object-cover" />
+                <Image src="/Team/Sadia Zalmay.png" alt="Sadia" width={128} height={128} className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Sadia Zalmay</h3>
               <p className="text-lg text-gray-600">Frontend Engineer</p>
@@ -44,7 +44,7 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                <Image src="/team/Fardin Ahmed.png" alt="Fardin" width={128} height={128} className="object-cover" />
+                <Image src="/Team/Fardin Ahmed.png" alt="Fardin" width={128} height={128} className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Fardin Ahmed</h3>
               <p className="text-lg text-gray-600">Backend Engineer</p>
@@ -52,7 +52,7 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                <Image src="/team/Nibish Tamrakar.jpg" alt="Nibish" width={128} height={128} className="object-cover" />
+                <Image src="/Team/Nibish Tamrakar.jpg" alt="Nibish" width={128} height={128} className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Nibish Tamrakar</h3>
               <p className="text-lg text-gray-600"> AI/ML Engineer</p>
@@ -60,7 +60,7 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                <Image src="/team/Fu Jun Pan.png" alt="Member 3" width={128} height={128} className="object-cover" />
+                <Image src="/Team/Fu Jun Pan.png" alt="Member 3" width={128} height={128} className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Fu Jun Pan</h3>
               <p className="text-lg text-gray-600">Frontend Engineer</p>
