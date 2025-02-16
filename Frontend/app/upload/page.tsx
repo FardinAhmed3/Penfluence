@@ -98,7 +98,6 @@ export default function UploadPage() {
                 </>
               )}
 
-
               {/* Camera capture button */}
               {!isCameraStarted && !isCaptured && (
                 <button
