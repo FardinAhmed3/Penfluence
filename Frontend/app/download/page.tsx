@@ -1,3 +1,4 @@
+/* 
 "use client";  // Client-side component
 
 import { useRouter } from "next/navigation";
@@ -62,3 +63,5 @@ export default function PdfPage() {
     </div>
   );
 }
+
+*/
