@@ -10,11 +10,18 @@ export default function LandingPage() {
           {/* Intro Section */}
           <section className="text-center mb-20">
             <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-6">
-              Welcome to EduOCR
+              Welcome to Penfluence
             </h1>
             <p className="text-xl text-gray-700 mb-8">
               Transform your handwritten notes into digital with ease and precision.
             </p>
+            <Image
+              src="/handwritten.png"
+              alt="Handwritten Notes"
+              className="mx-auto mb-4 object-contain" // object-contain ensures the image fits without distorting
+              width={400}
+              height={400}
+            />
             <a
               href="/upload"
               className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out"

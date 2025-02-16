@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useState } from "react"
+import Image from "next/image"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,16 +11,25 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex justify-between w-full">
-            <div className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-white">Logo</span>
+            <div className="flex items-center mt-5"> {/* Added margin-top to lower the logo */}
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={200}
+                height={200}
+                className="cursor-pointer" // Adds a pointer cursor on hover
+              />
+              </Link>
             </div>
+
             <div className="hidden sm:flex sm:items-center sm:space-x-8">
-              <Link
+              {/* <Link
                 href="/"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
               >
                 Home
-              </Link>
+              </Link> */}
               <Link
                 href="/upload"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
@@ -82,4 +92,3 @@ export default function Navbar() {
     </nav>
   )
 }
-

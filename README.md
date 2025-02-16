@@ -15,12 +15,12 @@ cd backend
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
-python manage.py runserver
+uvicorn main:app --reload
 ```
 ### For frontend
 ```
 cd frontend
-npm i
+npm install next react react-dom --legacy-peer-deps
 npm run dev
 ```
 

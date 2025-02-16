@@ -2,12 +2,15 @@
 
 import { useState, useRef, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import { Button } from "react-day-picker";
+import { useRouter } from "next/navigation";  
 
 export default function UploadPage() {
   const [imageUrl, setImageUrl] = useState<string | null>(null); // To store captured image
   const videoRef = useRef<HTMLVideoElement>(null); // Reference to the video element
   const [isCameraStarted, setIsCameraStarted] = useState(false); // Track if the camera is started
   const [isCaptured, setIsCaptured] = useState(false); // Track if an image is captured
+  const router = useRouter();
 
   // Handle file selection (image upload)
   const handleFileSelect = (event: { target: { files: any; }; }) => {
@@ -54,7 +57,7 @@ export default function UploadPage() {
   useEffect(() => {
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
+        const stream = videoRef.current.srcObject as MediaStream;
         const tracks = stream.getTracks();
         tracks.forEach((track) => track.stop()); // Stop the tracks
       }
@@ -63,7 +66,8 @@ export default function UploadPage() {
 
   // Handle Done button click
   const handleDone = () => {
-    alert("Image capture/upload is complete.");
+    router.push('/download');  // Navigate to /pdf
+    // alert("Image capture/upload is complete.");
     // Add logic for submitting the image or further steps here
   };
 
@@ -105,6 +109,7 @@ export default function UploadPage() {
                   Start Camera
                 </button>
               )}
+
 
               {/* Capture image button */}
               {!isCaptured && (
