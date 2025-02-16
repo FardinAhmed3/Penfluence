@@ -20,7 +20,6 @@ python manage.py runserver
 ### For frontend
 ```
 cd frontend
-npm i
 npm install next react react-dom --legacy-peer-deps
 npm run dev
 ```
