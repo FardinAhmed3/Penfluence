@@ -10,7 +10,7 @@ export default function LandingPage() {
           {/* Intro Section */}
           <section className="text-center mb-20">
             <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600 mb-6">
-              Welcome to EduOCR
+              Welcome to Penfluence
             </h1>
             <p className="text-xl text-gray-700 mb-8">
               Transform your handwritten notes into digital with ease and precision.
