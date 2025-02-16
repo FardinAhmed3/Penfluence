@@ -12,12 +12,15 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex justify-between w-full">
             <div className="flex items-center mt-5"> {/* Added margin-top to lower the logo */}
+            <Link href="/">
               <Image
                 src="/logo.png"
                 alt="Logo"
                 width={200}
-                height={200} 
+                height={200}
+                className="cursor-pointer" // Adds a pointer cursor on hover
               />
+              </Link>
             </div>
 
             <div className="hidden sm:flex sm:items-center sm:space-x-8">
