@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app import router as upload_router  # Import the router from app.py
 
 app = FastAPI(
@@ -7,7 +8,16 @@ app = FastAPI(
     version="1.0"
 )
 
-# Include the router for handling image uploads
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Better to use ["http://localhost:3000"] for security
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
+# The router for handling image uploads
 app.include_router(upload_router, prefix="/upload", tags=["Upload"])
 
 @app.get("/")

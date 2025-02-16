@@ -59,27 +59,27 @@ export default function UploadPage() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/upload", {
+      const response = await fetch("http://127.0.0.1:8000/upload/", {  // ✅ Fix: Ensure trailing slash
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload image");
+        throw new Error(`Failed to upload image. Status: ${response.status}`);
       }
 
-      // Convert response to blob and create a downloadable URL
+      // ✅ Correctly handle PDF response
       const blob = await response.blob();
       const pdfUrl = window.URL.createObjectURL(blob);
       setPdfUrl(pdfUrl);
 
-      // Trigger automatic download
-      const a = document.createElement("a");
-      a.href = pdfUrl;
-      a.download = "digitized_notes.pdf";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      // ✅ Use a hidden <a> element to trigger the download
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.setAttribute("download", "digitized_notes.pdf");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error("Upload error:", error);
     } finally {
