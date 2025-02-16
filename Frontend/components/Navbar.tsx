@@ -11,15 +11,20 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex justify-between w-full">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold text-white">Logo</span>
+              <Link 
+                href="/"
+                className="text-2xl font-bold text-white"
+              >
+                EduOCR
+              </Link>
             </div>
             <div className="hidden sm:flex sm:items-center sm:space-x-8">
-              <Link
+              {/* <Link
                 href="/"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
               >
                 Home
-              </Link>
+              </Link> */}
               <Link
                 href="/upload"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
