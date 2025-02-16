@@ -6,4 +6,4 @@ torch
 reportlab
 fastapi
 uvicorn
-
+python-multipart
