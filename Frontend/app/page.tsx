@@ -30,36 +30,46 @@ export default function LandingPage() {
             </a>
           </section>
 
-          {/* Created By Section */}
-          <section>
-            <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">Meet the minds behind</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-              {[1, 2, 3, 4].map((index) => (
-                <div key={index} className="flex flex-col items-center">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                    {/* <Image
-                      src={`https://picsum.photos/seed/${index}/128/128`}
-                      alt={`Team member ${index}`}
-                      width={128}
-                      height={128}
-                      className="object-cover"
-                    /> */}
-                  </div>
-                  <p className="text-lg font-medium text-gray-800">Team Member {index}</p>
-                  <p className="text-sm text-gray-600">Frontend</p>
-                </div>
-              ))}
+        {/* Created By Section */}
+        <section>
+          <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">Meet the minds behind</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div className="flex flex-col items-center">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
+                <Image src="/team/Sadia Zalmay.png" alt="Sadia" width={128} height={128} className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Sadia Zalmay</h3>
+              <p className="text-lg text-gray-600">Frontend Engineer</p>
             </div>
-          </section>
-        </div>
-      </main>
-      {/* Decorative Elements */}
-      {/* <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute top-3/4 right-1/4 w-64 h-64 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-      </div> */}
-    </div>
+
+            <div className="flex flex-col items-center">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
+                <Image src="/team/Fardin Ahmed.png" alt="Fardin" width={128} height={128} className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Fardin Ahmed</h3>
+              <p className="text-lg text-gray-600">Backend Engineer</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
+                <Image src="/team/Nibish Tamrakar.jpg" alt="Nibish" width={128} height={128} className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Nibish Tamrakar</h3>
+              <p className="text-lg text-gray-600"> AI/ML Engineer</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
+                <Image src="/team/Fu Jun Pan.png" alt="Member 3" width={128} height={128} className="object-cover" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800">Fu Jun Pan</h3>
+              <p className="text-lg text-gray-600">Frontend Engineer</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
   )
 }
 

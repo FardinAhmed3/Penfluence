@@ -1,4 +1,4 @@
-"use client";  // Mark this component as a client-side component
+"use client";  // Client-side component
 
 import { useRouter } from "next/navigation";
 
@@ -7,11 +7,11 @@ export default function PdfPage() {
 
   // Handle Delete button click
   const handleDelete = () => {
-    localStorage.removeItem("capturedImage"); // Optionally remove data
+    localStorage.removeItem("capturedImage"); 
     router.push("/upload"); // Redirect to the Upload page
   };
 
-  // Handle Retake button click
+
   const handleRetake = () => {
     router.push("/upload"); // Redirect to the Upload page
   };
