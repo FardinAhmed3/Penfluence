@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Penfluence",
   description: "Created by students, for students",
   icons: {
-    icon: "/favicon.png", // Uses your favicon.png
+    icon: "/favicon.png",
   },
 };
 
