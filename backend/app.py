@@ -1,18 +1,18 @@
 from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import StreamingResponse
 import openai
 import cv2
 import numpy as np
 import base64
 import os
-from fastapi.responses import FileResponse
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import textwrap
 from PIL import Image
-from fastapi.responses import StreamingResponse
+
 # Set your OpenAI API key
-client = openai.OpenAI(api_key="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") 
+client = openai.OpenAI(api_key="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")
 
 # Initialize FastAPI Router
 router = APIRouter()
@@ -62,8 +62,8 @@ def extract_and_save_diagrams(image_path):
     return saved_images
 
 def generate_pdf(text, diagram_paths):
-    pdf_path = "digitized_notes.pdf"  # Temporary PDF file
-    c = canvas.Canvas(pdf_path, pagesize=letter)
+    pdf_buffer = BytesIO()
+    c = canvas.Canvas(pdf_buffer, pagesize=letter)
     width, height = letter
 
     c.setFont("Helvetica-Bold", 14)
@@ -108,20 +108,33 @@ def generate_pdf(text, diagram_paths):
             images_on_page += 1
 
     c.save()
-    return pdf_path  # Return the file path
+    pdf_buffer.seek(0)
+    return pdf_buffer
 
-router.post("/upload/")
+@router.post("/", summary="Upload an image and receive a digitized PDF")
 async def upload_image(file: UploadFile = File(...)):
+    """
+    Uploads an image file, processes it using OpenAI and OpenCV,
+    and returns a digitized PDF containing structured text and extracted diagrams.
+    """
+    if not file:
+        return {"error": "No file uploaded!"}
+
+    # Save the uploaded file temporarily
     image_path = f"temp_{file.filename}"
     with open(image_path, "wb") as buffer:
         buffer.write(await file.read())
 
+    # Process the image
     text = extract_text_openai(image_path)
     diagrams = extract_and_save_diagrams(image_path)
-    pdf_path = generate_pdf(text, diagrams)  # Get file path
+    pdf_buffer = generate_pdf(text, diagrams)
 
-    os.remove(image_path)  # Clean up temp image file
+    # Cleanup temporary image file
+    os.remove(image_path)
 
-    # Open the generated PDF and return it as a stream
-    pdf_file = open(pdf_path, "rb")
-    return StreamingResponse(pdf_file, media_type="application/pdf", headers={"Content-Disposition": "attachment; filename=digitized_notes.pdf"})
+    return StreamingResponse(
+        pdf_buffer, 
+        media_type="application/pdf", 
+        headers={"Content-Disposition": "attachment; filename=digitized_notes.pdf"}
+    )
