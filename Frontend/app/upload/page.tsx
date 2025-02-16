@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Navbar from "../../components/Navbar";
+import { Button } from "react-day-picker";
 
 export default function UploadPage() {
   const [imageUrl, setImageUrl] = useState<string | null>(null); // To store captured image
@@ -54,7 +55,7 @@ export default function UploadPage() {
   useEffect(() => {
     return () => {
       if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
+        const stream = videoRef.current.srcObject as MediaStream;
         const tracks = stream.getTracks();
         tracks.forEach((track) => track.stop()); // Stop the tracks
       }
@@ -81,7 +82,10 @@ export default function UploadPage() {
               {/* File upload button */}
               {!isCaptured && (
                 <>
-                  <label htmlFor="file-upload" className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer">
+                  <label
+                    htmlFor="file-upload"
+                    className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer block text-center flex items-center justify-center"
+                  >
                     Upload Image
                   </label>
                   <input
@@ -103,6 +107,7 @@ export default function UploadPage() {
                   Start Camera
                 </button>
               )}
+
 
               {/* Capture image button */}
               {!isCaptured && (
