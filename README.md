@@ -1,4 +1,4 @@
-# EduOCR
+# Penfluence
 Brooklyn College Hackathon Project
 
 ## How to get started
