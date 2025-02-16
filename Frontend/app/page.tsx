@@ -60,7 +60,7 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center">
               <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-lg">
-                <Image src="/team/Fu Jun Pan.jpg" alt="Member 3" width={128} height={128} className="object-cover" />
+                <Image src="/team/Fu Jun Pan.png" alt="Member 3" width={128} height={128} className="object-cover" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800">Fu Jun Pan</h3>
               <p className="text-lg text-gray-600">Frontend Engineer</p>
