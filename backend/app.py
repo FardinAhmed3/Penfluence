@@ -12,7 +12,7 @@ import textwrap
 from PIL import Image
 
 # Set your OpenAI API key
-client = openai.OpenAI(api_key="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")
+client = openai.OpenAI(api_key="")
 
 # Initialize FastAPI Router
 router = APIRouter()
