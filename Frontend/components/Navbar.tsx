@@ -21,12 +21,12 @@ export default function Navbar() {
             </div>
 
             <div className="hidden sm:flex sm:items-center sm:space-x-8">
-              <Link
+              {/* <Link
                 href="/"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
               >
                 Home
-              </Link>
+              </Link> */}
               <Link
                 href="/upload"
                 className="text-white hover:bg-purple-500 hover:bg-opacity-50 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
