@@ -14,7 +14,7 @@ export default function Navbar() {
             <div className="flex items-center mt-5"> {/* Added margin-top to lower the logo */}
             <Link href="/">
               <Image
-                src="/logo.png"
+                src="/logo1.png"
                 alt="Logo"
                 width={200}
                 height={200}
