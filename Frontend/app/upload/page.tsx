@@ -4,29 +4,29 @@ import { useState, useRef, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 
 export default function UploadPage() {
-  const [imageUrl, setImageUrl] = useState<string | null>(null); // To store captured image
-  const videoRef = useRef<HTMLVideoElement>(null); // Reference to the video element
-  const [isCameraStarted, setIsCameraStarted] = useState(false); // Track if the camera is started
-  const [isCaptured, setIsCaptured] = useState(false); // Track if an image is captured
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isCameraStarted, setIsCameraStarted] = useState(false);
+  const [isCaptured, setIsCaptured] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-  // Handle file selection (image upload)
-  const handleFileSelect = (event: { target: { files: any; }; }) => {
+  const handleFileSelect = (event: { target: { files: any } }) => {
     const files = event.target.files;
     if (files.length > 0) {
-      console.log("Selected files:", files);
-      // You can perform further actions like uploading the selected files
-      setImageUrl(URL.createObjectURL(files[0])); // Show uploaded image
-      setIsCaptured(true); // Mark as captured
+      const file = files[0];
+      setImageUrl(URL.createObjectURL(file));
+      setIsCaptured(true);
+      uploadImage(file);
     }
   };
 
-  // Start camera feed
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.play();  // Ensure video starts playing
+        videoRef.current.play();
       }
       setIsCameraStarted(true);
     } catch (err) {
@@ -34,37 +34,57 @@ export default function UploadPage() {
     }
   };
 
-  // Capture image from camera
   const captureImage = () => {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
-
     const video = videoRef.current;
     if (video && context) {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL("image/png");
-      setImageUrl(dataUrl); // Set the captured image URL
-      setIsCaptured(true); // Mark as captured
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const file = new File([blob], "captured_image.png", { type: "image/png" });
+          setImageUrl(URL.createObjectURL(blob));
+          setIsCaptured(true);
+          uploadImage(file);
+        }
+      }, "image/png");
     }
   };
 
-  // Clean up the camera stream when the component is unmounted
-  useEffect(() => {
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop()); // Stop the tracks
-      }
-    };
-  }, []);
+  const uploadImage = async (file: File) => {
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
 
-  // Handle Done button click
-  const handleDone = () => {
-    alert("Image capture/upload is complete.");
-    // Add logic for submitting the image or further steps here
+    try {
+      const response = await fetch("http://127.0.0.1:8000/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload image");
+      }
+
+      // Convert response to blob and create a downloadable URL
+      const blob = await response.blob();
+      const pdfUrl = window.URL.createObjectURL(blob);
+      setPdfUrl(pdfUrl);
+
+      // Trigger automatic download
+      const a = document.createElement("a");
+      a.href = pdfUrl;
+      a.download = "digitized_notes.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Upload error:", error);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -78,54 +98,38 @@ export default function UploadPage() {
               Transform your handwritten notes into digital text with our advanced AI technology.
             </p>
             <div className="space-y-6">
-              {/* File upload button */}
               {!isCaptured && (
                 <>
                   <label htmlFor="file-upload" className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer">
                     Upload Image
                   </label>
-                  <input
-                    id="file-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileSelect}
-                    className="hidden"
-                  />
+                  <input id="file-upload" type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
                 </>
               )}
 
-              {/* Camera capture button */}
               {!isCameraStarted && !isCaptured && (
-                <button
-                  onClick={startCamera}
-                  className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out"
-                >
+                <button onClick={startCamera} className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out">
                   Start Camera
                 </button>
               )}
 
-              {/* Capture image button */}
               {!isCaptured && (
-                <button
-                  onClick={captureImage}
-                  className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out"
-                >
+                <button onClick={captureImage} className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out">
                   Capture Image
                 </button>
               )}
 
-              {/* Done button */}
-              {isCaptured && (
-                <button
-                  onClick={handleDone}
-                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out"
-                >
-                  Done
-                </button>
+              {isUploading && <p className="text-center text-gray-600">Uploading and processing...</p>}
+
+              {pdfUrl && (
+                <div className="text-center mt-4">
+                  <a href={pdfUrl} download="digitized_notes.pdf" className="bg-blue-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition">
+                    Download PDF
+                  </a>
+                </div>
               )}
             </div>
 
-            {/* Show captured image */}
             {imageUrl && (
               <div className="mt-6 text-center">
                 <h3 className="text-lg font-medium text-gray-800">Captured Image:</h3>
@@ -133,17 +137,9 @@ export default function UploadPage() {
               </div>
             )}
 
-            {/* Video feed */}
             <div className="mt-6">
               {isCameraStarted && !isCaptured && (
-                <video
-                  ref={videoRef}
-                  width="100%"
-                  height="auto"
-                  autoPlay
-                  playsInline
-                  className="border-2 border-gray-400 rounded-lg"
-                />
+                <video ref={videoRef} width="100%" height="auto" autoPlay playsInline className="border-2 border-gray-400 rounded-lg" />
               )}
             </div>
           </div>

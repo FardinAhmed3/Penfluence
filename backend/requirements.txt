@@ -1,1 +1,1 @@
-pip install openai opencv-python numpy pandas torch fastapi uvicorn
+pip install openai opencv-python numpy pandas torch reportlab fastapi uvicorn
