@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import router as upload_router  # Import the router from app.py
 
 app = FastAPI(
-    title="EduOCR API",
+    title="Penfluence API",
     description="An API to digitize handwritten notes into PDFs",
     version="1.0"
 )
