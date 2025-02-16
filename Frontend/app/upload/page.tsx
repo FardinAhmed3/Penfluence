@@ -1,4 +1,4 @@
-"use client";  // Mark this component as a client-side component
+"use client";  // client-side component
 
 import { useState, useRef, useEffect } from "react";
 import Navbar from "../../components/Navbar";
@@ -68,12 +68,12 @@ export default function UploadPage() {
         throw new Error(`Failed to upload image. Status: ${response.status}`);
       }
 
-      // ✅ Correctly handle PDF response
+      // handle PDF response
       const blob = await response.blob();
       const pdfUrl = window.URL.createObjectURL(blob);
       setPdfUrl(pdfUrl);
 
-      // ✅ Use a hidden <a> element to trigger the download
+      // Use a hidden <a> element to trigger the download
       const link = document.createElement("a");
       link.href = pdfUrl;
       link.setAttribute("download", "digitized_notes.pdf");
