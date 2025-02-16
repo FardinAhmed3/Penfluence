@@ -16,8 +16,8 @@ export default function Navbar() {
               <Image
                 src="/logo.png"
                 alt="Logo"
-                width={200}
-                height={200}
+                width={150}
+                height={150}
                 className="cursor-pointer" // Adds a pointer cursor on hover
               />
               </Link>
