@@ -4,3 +4,4 @@ venv
 **/*.pyc
 *.pyc
 extracted_diagrams
+digitized_notes*.pdf
